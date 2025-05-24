@@ -1,4 +1,5 @@
 import React from 'react';
+import Swal from 'sweetalert2';
 
 const AddCoffee = () => {
 
@@ -12,14 +13,21 @@ const AddCoffee = () => {
         fetch('http://localhost:3000/coffees', {
             method: "POST",
             headers: {
-                'content-type' : 'application/json'
+                'content-type': 'application/json'
             },
             body: JSON.stringify(newCoffee)
         })
-        .then(res => res.json())
-        .then(data => {
-            console.log('After adding coffee to db' , data);
-        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.insertedId) {
+                    console.log("Inserted successfully");
+                    Swal.fire({
+                        title: "Coffee added successfully!",
+                        icon: "success",
+                        draggable: true
+                    });
+                }
+            })
     }
 
 
@@ -52,8 +60,8 @@ const AddCoffee = () => {
                                 <input type="text" name='taste' className="input w-full rounded-lg py-8" placeholder="Enetr Coffee Taste" />
                             </fieldset>
                             <fieldset className="fieldset rounded-box  lg:p-4">
-                                <label className="label text-lg font-medium text-black">Category</label>
-                                <input type="text" name='category' className="input w-full rounded-lg py-8" placeholder="Enetr Coffee Category" />
+                                <label className="label text-lg font-medium text-black">Price</label>
+                                <input type="text" name='Price' className="input w-full rounded-lg py-8" placeholder="Enetr Coffee Price" />
                             </fieldset>
                             <fieldset className="fieldset rounded-box  lg:p-4">
                                 <label className="label text-lg font-medium text-black">Details</label>
@@ -66,7 +74,7 @@ const AddCoffee = () => {
                                 <input type="text" name='photo' className="input w-full rounded-lg py-8" placeholder="Enetr Photo URL" />
                             </fieldset>
                         </div>
-                        <input className='border-2 bg-[#D2B48C] text-[#331A15] border-[#331A15] w-full py-3 text-xl font-bold' type="submit" value="Add Coffee" />
+                        <input className='border-2 bg-[#D2B48C] text-[#331A15] cursor-pointer border-[#331A15] w-full py-3 text-xl font-bold' type="submit" value="Add Coffee" />
                     </form>
                 </div>
             </div>
